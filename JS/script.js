@@ -2,7 +2,7 @@
 Website Name - Alarm-Clock
 Name : Vanshul Kesharwani
 Date : 02/04/2022
-Version : 3.1.1
+Version : 4.1.1
 Email : vkvanshulkesharwani54@gmail.com
 Description : This is a Web app for adding alarm clock.
 */
@@ -26,20 +26,42 @@ setAlarm.addEventListener("click", ringAlarm);
 
 // This function will run when ever is alarm set from UI.
 function ringAlarm() {
+    let inputDateTime;
+    let currentDateTime = new Date();
     let time = document.getElementById("time").value;
     let date = document.getElementById("date").value;
-    date = time + " " + date
-    let inputDateTime = new Date(date);
-    let currentDateTime = new Date();
+
+    // If date is not enter in input then it will give current date.
+    if (date == "") {
+        date = currentDateTime.getDate();
+        let month = currentDateTime.getMonth();
+        let year = currentDateTime.getFullYear();
+        date = (date < 10 ? "0" : "") + date;
+        month = (month < 10 ? "0" : "") + Number(month + 1);
+        date = `${year}-${month}-${date}`;
+    };
+    // If time is not enter in input then it will give current time.
+    if (time == "") {
+        let hours = currentDateTime.getHours();
+        let minutes = currentDateTime.getMinutes();
+        alert(`Alarm default time set, Will ring after 5 minutes i.e ${hours}:${String(Number(minutes)+5)}`);
+        // Fixing Minutes and hours and seconds if time is less than 10 then we will add 0 in front of it.
+        hours = (hours < 10 ? "0" : "") + hours;
+        minutes = (minutes < 10 ? "0" : "") + minutes;
+        time = `${hours}:${minutes}`;
+        setTimeout(() => {
+            playAudio();
+        }, 300000);
+    };
+    dateStr = time + " " + date;
+    inputDateTime = new Date(dateStr);
     let alarmTime = inputDateTime - currentDateTime;
     if (alarmTime >= 0) {
-        console.log("Alarm set Successfully");
         setTimeout(() => {
             playAudio();
         }, alarmTime);
-    } else {
-        console.log("Date & time is not correct.");
-    };
+        alert("Alarm set successfully.");
+    }
 };
 
 // Added Current time from here.
