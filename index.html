@@ -12,10 +12,14 @@
     <title>Alarm Clock</title>
 </head>
 
-<body>
+<body onload="updateClock(); setInterval('updateClock()', 1000)">
     <!-- Container of form starts from here. -->
     <div class="container my-5 text-center">
-        <h1>Alarm Clock</h1>
+        <div class="fluid-container d-flex justify-content-between align-items-end">
+            <span></span>
+            <h1 class="d-inline-block">Alarm Clock</h1>
+            <span id="currentTimeShow"></span>
+        </div>
         <hr>
         <div class="card text-center my-5 m-auto" style="width: 20rem;">
             <div class="card-body p-5">
